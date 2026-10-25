@@ -1,0 +1,179 @@
+[gd_scene format=3 uid="uid://dun7vyuuj8myq"]
+
+[ext_resource type="Script" path="res://scripts/options_menu.gd" id="1_opt"]
+[ext_resource type="FontFile" uid="uid://bg4d56k0g6xsw" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("2_font")
+font_size = 18
+font_color = Color(0.2, 1, 0.85, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_section"]
+font = ExtResource("2_font")
+font_size = 11
+font_color = Color(1, 0.85, 0.2, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_label"]
+font = ExtResource("2_font")
+font_size = 9
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_opt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06, 0.08, 0.14, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS & CONTROLS"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="AudioHeader" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "AUDIO SETTINGS"
+label_settings = SubResource("LabelSettings_section")
+
+[node name="AudioGrid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="LabelMaster" type="Label" parent="MarginContainer/VBoxContainer/AudioGrid"]
+layout_mode = 2
+text = "Master Volume"
+label_settings = SubResource("LabelSettings_label")
+
+[node name="MasterSlider" type="HSlider" parent="MarginContainer/VBoxContainer/AudioGrid"]
+custom_minimum_size = Vector2(160, 16)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="LabelMusic" type="Label" parent="MarginContainer/VBoxContainer/AudioGrid"]
+layout_mode = 2
+text = "Music Volume"
+label_settings = SubResource("LabelSettings_label")
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/AudioGrid"]
+custom_minimum_size = Vector2(160, 16)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="LabelSFX" type="Label" parent="MarginContainer/VBoxContainer/AudioGrid"]
+layout_mode = 2
+text = "SFX Volume"
+label_settings = SubResource("LabelSettings_label")
+
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/VBoxContainer/AudioGrid"]
+custom_minimum_size = Vector2(160, 16)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MuteCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "Mute All Audio"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsHeader" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "KEYBOARD CONTROLS (Click to Rebind)"
+label_settings = SubResource("LabelSettings_section")
+
+[node name="ControlsGrid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="BtnLeft" type="Button" parent="MarginContainer/VBoxContainer/ControlsGrid"]
+custom_minimum_size = Vector2(130, 28)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "LEFT: A"
+
+[node name="BtnRight" type="Button" parent="MarginContainer/VBoxContainer/ControlsGrid"]
+custom_minimum_size = Vector2(130, 28)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "RIGHT: D"
+
+[node name="BtnJump" type="Button" parent="MarginContainer/VBoxContainer/ControlsGrid"]
+custom_minimum_size = Vector2(130, 28)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "JUMP: SPACE"
+
+[node name="BtnBlink" type="Button" parent="MarginContainer/VBoxContainer/ControlsGrid"]
+custom_minimum_size = Vector2(130, 28)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "BLINK: SHIFT"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ResetButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "RESET DEFAULTS"
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "BACK"

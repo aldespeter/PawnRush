@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://df7vbari88m1q"]
+
+[ext_resource type="Script" path="res://scripts/spike_barrier.gd" id="1_barrier"]
+[ext_resource type="Texture2D" uid="uid://ckwm7iqr41hap" path="res://assets/sprites/world_tileset.png" id="2_tileset"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrier"]
+size = Vector2(8, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spikes"]
+atlas = ExtResource("2_tileset")
+region = Rect2(96, 128, 16, 16)
+
+[node name="SpikeBarrier" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_barrier")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_barrier")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.25, 0.25, 0.95)
+position = Vector2(0, -15)
+scale = Vector2(0.6, 2.0)
+texture = SubResource("AtlasTexture_spikes")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

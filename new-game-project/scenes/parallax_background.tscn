@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://df7parallaxbg"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="SkyLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.05, 0.02)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sky" type="ColorRect" parent="SkyLayer"]
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+color = Color(0.28, 0.52, 0.78, 1)
+
+[node name="DistantMountains" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.2, 0.08)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Mtn1" type="Polygon2D" parent="DistantMountains"]
+color = Color(0.22, 0.42, 0.58, 0.85)
+polygon = PackedVector2Array(-320, 160, -220, 20, -120, 160, -20, 40, 80, 160, 180, 10, 280, 160, 320, 160, 320, 240, -320, 240)
+
+[node name="MidHills" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.45, 0.15)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Hills1" type="Polygon2D" parent="MidHills"]
+color = Color(0.18, 0.36, 0.42, 0.9)
+polygon = PackedVector2Array(-320, 160, -260, 70, -160, 160, -70, 80, 40, 160, 140, 60, 240, 160, 320, 160, 320, 240, -320, 240)

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://b7vpickuplife"]
+
+[ext_resource type="Script" path="res://scripts/life_pickup.gd" id="1_pickup"]
+[ext_resource type="Texture2D" uid="uid://6nujrdb0lcqd" path="res://assets/sprites/fruit.png" id="2_fruit"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fruit"]
+radius = 6.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heart_fruit"]
+atlas = ExtResource("2_fruit")
+region = Rect2(0, 0, 16, 16)
+
+[node name="LifePickup" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_pickup")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_fruit")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.35, 0.5, 1)
+position = Vector2(0, -6)
+scale = Vector2(1.1, 1.1)
+texture = SubResource("AtlasTexture_heart_fruit")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

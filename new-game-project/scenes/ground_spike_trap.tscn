@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c8spike_trap_scene"]
+
+[ext_resource type="Script" path="res://scripts/ground_spike_trap.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://6h53p111675" path="res://assets/sprites/platforms.png" id="2_platform_tex"]
+[ext_resource type="AudioStream" uid="uid://b7shuh2ooqhj7" path="res://assets/sounds/tap.wav" id="3_sfx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
+size = Vector2(30, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(26, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_damage"]
+size = Vector2(26, 12)
+
+[node name="GroundSpikeTrap" type="AnimatableBody2D"]
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_solid")
+one_way_collision = true
+
+[node name="BaseSprite" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.72, 0.62, 1)
+texture = ExtResource("2_platform_tex")
+region_enabled = true
+region_rect = Rect2(17, 0, 30, 10)
+
+[node name="StoneSlots" type="Polygon2D" parent="."]
+color = Color(0.18, 0.12, 0.1, 0.95)
+polygon = PackedVector2Array(-12, -4.5, -8, -4.5, -8, -3.5, -12, -3.5, -6, -4.5, -2, -4.5, -2, -3.5, -6, -3.5, 0, -4.5, 4, -4.5, 4, -3.5, 0, -3.5, 6, -4.5, 10, -4.5, 10, -3.5, 6, -3.5)
+
+[node name="SpikeRoot" type="Node2D" parent="."]
+position = Vector2(0, 10)
+
+[node name="SpikeBase" type="Polygon2D" parent="SpikeRoot"]
+color = Color(0.22, 0.2, 0.25, 1)
+polygon = PackedVector2Array(-13, 0, 12, 0, 12, 2, -13, 2)
+
+[node name="SpikesVisual" type="Polygon2D" parent="SpikeRoot"]
+color = Color(0.75, 0.25, 0.2, 1)
+polygon = PackedVector2Array(-13, 0, -10, -14, -7, 0, -7, 0, -4, -14, -1, 0, -1, 0, 2, -14, 5, 0, 5, 0, 8, -14, 11, 0)
+
+[node name="SpikesHighlight" type="Polygon2D" parent="SpikeRoot"]
+color = Color(1, 0.9, 0.85, 0.95)
+polygon = PackedVector2Array(-13, 0, -10, -14, -9.5, -12, -12, 0, -7, 0, -4, -14, -3.5, -12, -6, 0, -1, 0, 2, -14, 2.5, -12, 0, 0, 5, 0, 8, -14, 8.5, -12, 6, 0)
+
+[node name="TriggerArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="TriggerShape" type="CollisionShape2D" parent="TriggerArea"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_trigger")
+
+[node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="DamageShape" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_damage")
+
+[node name="TrapSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_sfx")
+max_distance = 320.0
+
+[connection signal="body_entered" from="TriggerArea" to="." method="_on_trigger_area_body_entered"]
+[connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]

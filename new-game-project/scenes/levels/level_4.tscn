@@ -1,0 +1,509 @@
+[gd_scene format=3 uid="uid://cqsa25o8ow3ao"]
+
+[ext_resource type="Script" path="res://scripts/level_4.gd" id="1_level4"]
+[ext_resource type="PackedScene" uid="uid://be8qbmt0fe144" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cgqpg3bl07ghk" path="res://scenes/platform.tscn" id="2_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://ckwm7iqr41hap" path="res://assets/sprites/world_tileset.png" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cpsebg2lxc8ax" path="res://scenes/coin.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://dhq0pa6na6p7k" path="res://scenes/killzone.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://dg4n7tp4d7q1y" path="res://scenes/slime.tscn" id="6_p57ef"]
+[ext_resource type="PackedScene" uid="uid://c38whqep818mk" path="res://scenes/hud.tscn" id="7_hud"]
+[ext_resource type="PackedScene" uid="uid://df6vkhqep17m3" path="res://scenes/portal.tscn" id="8_portal"]
+[ext_resource type="PackedScene" uid="uid://c3qg04d7q1y8m" path="res://scenes/slime_purple.tscn" id="9_purple_slime"]
+[ext_resource type="FontFile" uid="uid://bg4d56k0g6xsw" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="10_font"]
+[ext_resource type="PackedScene" uid="uid://b7vpickuplife" path="res://scenes/life_pickup.tscn" id="12_life"]
+[ext_resource type="PackedScene" path="res://scenes/ground_spike_trap.tscn" id="13_spike_trap"]
+[ext_resource type="PackedScene" uid="uid://c6breakableblock" path="res://scenes/breakable_block.tscn" id="14_breakable"]
+[ext_resource type="PackedScene" uid="uid://dwk2ns8sdwg3k" path="res://scenes/parallax_spire.tscn" id="15_parallax"]
+[ext_resource type="PackedScene" path="res://scenes/sword_pickup.tscn" id="16_sword"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tunnel_ceiling"]
+size = Vector2(64, 16)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_abyss"]
+distance = -110.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boundary"]
+size = Vector2(24, 300)
+
+[sub_resource type="Animation" id="Animation_h1"]
+resource_name = "move_h1"
+length = 2.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-160, 15), Vector2(-85, 15)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h1"]
+_data = {
+&"move_h1": SubResource("Animation_h1")
+}
+
+[sub_resource type="Animation" id="Animation_v1"]
+resource_name = "move_v1"
+length = 2.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(145, 15), Vector2(145, -65)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v1"]
+_data = {
+&"move_v1": SubResource("Animation_v1")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_highlight"]
+font = ExtResource("10_font")
+font_size = 8
+font_color = Color(0.3, 1, 0.85, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_action"]
+font = ExtResource("10_font")
+font_size = 8
+font_color = Color(1, 0.85, 0.2, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_info"]
+font = ExtResource("10_font")
+font_size = 8
+font_color = Color(0.9, 0.9, 0.9, 0.9)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_level4")
+
+[node name="ParallaxSpire" parent="." instance=ExtResource("15_parallax")]
+
+[node name="SpireParticles" type="CPUParticles2D" parent="."]
+position = Vector2(180, -30)
+amount = 28
+lifetime = 6.0
+emission_shape = 3
+emission_rect_extents = Vector2(550, 140)
+spread = 25.0
+gravity = Vector2(-8, 3)
+initial_velocity_min = 6.0
+initial_velocity_max = 14.0
+scale_amount_max = 2.5
+color = Color(0.85, 0.95, 1, 0.55)
+
+[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+position = Vector2(-330, 0)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -8)
+zoom = Vector2(4, 4)
+limit_left = -380
+limit_top = -220
+limit_right = 740
+limit_bottom = 120
+position_smoothing_enabled = true
+
+[node name="killzone" parent="." instance=ExtResource("5_iywne")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+visible = false
+shape = SubResource("WorldBoundaryShape2D_abyss")
+
+[node name="Boundaries" type="Node" parent="."]
+
+[node name="LeftBoundaryWall" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(-380, -90)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBoundaryWall"]
+shape = SubResource("RectangleShape2D_boundary")
+
+[node name="RightBoundaryWall" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(730, -90)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBoundaryWall"]
+shape = SubResource("RectangleShape2D_boundary")
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="TreeSpawn" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(-335, -9)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(32, 80, 48, 48)
+
+[node name="PlantSpawn" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(-295, 7)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="PlantArch" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(-230, -63)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(16, 112, 16, 16)
+
+[node name="VineVault" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(50, 5)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(96, 48, 16, 32)
+
+[node name="PlantVault" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(35, 27)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="VineRampart" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(210, -50)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(96, 48, 16, 32)
+
+[node name="TreePinnacle" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(225, -129)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(32, 80, 48, 48)
+
+[node name="PlantRampart" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(285, -73)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(16, 112, 16, 16)
+
+[node name="PlantLedge" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(450, -58)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="TreeSummit" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(585, -94)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(32, 80, 48, 48)
+
+[node name="PlantSummit" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(625, -78)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(0, 112, 16, 16)
+
+[node name="VineSummit" type="Sprite2D" parent="Decorations"]
+z_index = -1
+position = Vector2(665, -55)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(96, 48, 16, 32)
+
+[node name="Coins" type="Node" parent="."]
+
+[node name="Coin1" parent="Coins" instance=ExtResource("4_lbhrr")]
+position = Vector2(-230, -75)
+
+[node name="Coin2" parent="Coins" instance=ExtResource("4_lbhrr")]
+position = Vector2(50, 15)
+
+[node name="Coin3" parent="Coins" instance=ExtResource("4_lbhrr")]
+position = Vector2(555, -85)
+
+[node name="Platforms" type="Node" parent="."]
+
+[node name="PlatformSpawn1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-345, 15)
+
+[node name="PlatformSpawn2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-315, 15)
+
+[node name="PlatformSpawn3" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-285, 15)
+
+[node name="PlatformWalk1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-255, 15)
+
+[node name="PlatformWalk2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-225, 15)
+
+[node name="PlatformWalk3" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-195, 15)
+
+[node name="PlatformArchStep" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-265, -25)
+
+[node name="PlatformArch" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-230, -55)
+
+[node name="PlatformMover1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-160, 15)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/PlatformMover1"]
+libraries/ = SubResource("AnimationLibrary_h1")
+autoplay = &"move_h1"
+
+[node name="PlatformMidPillar" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(-45, 15)
+
+[node name="TrapBlock1" parent="Platforms" instance=ExtResource("13_spike_trap")]
+position = Vector2(-15, 15)
+
+[node name="PlatformBridge1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(20, -10)
+
+[node name="BreakableBlock1" parent="Platforms" instance=ExtResource("14_breakable")]
+position = Vector2(50, -10)
+
+[node name="PlatformBridge2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(80, -10)
+
+[node name="PlatformVault1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(35, 35)
+
+[node name="PlatformVault2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(65, 35)
+
+[node name="PlatformVaultStep" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(95, 12)
+
+[node name="PlatformElevator" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(145, 15)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/PlatformElevator"]
+libraries/ = SubResource("AnimationLibrary_v1")
+autoplay = &"move_v1"
+
+[node name="PlatformRampart1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(180, -65)
+
+[node name="PlatformRampart2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(210, -65)
+
+[node name="PlatformRampart3" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(240, -65)
+
+[node name="PlatformRampart4" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(270, -65)
+
+[node name="PlatformRampart5" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(300, -65)
+
+[node name="PlatformPinnacleStep" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(225, -105)
+
+[node name="BreakableBlock2" parent="Platforms" instance=ExtResource("14_breakable")]
+position = Vector2(255, -105)
+reward_type = "life"
+
+[node name="PlatformClimb1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(285, -125)
+
+[node name="PlatformClimb2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(255, -145)
+
+[node name="PlatformClimb3" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(285, -165)
+
+[node name="PlatformSanctum1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(315, -165)
+
+[node name="PlatformSanctum2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(345, -165)
+
+[node name="PlatformSanctum3" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(375, -165)
+
+[node name="SlopeRunway" type="StaticBody2D" parent="Platforms"]
+collision_layer = 1
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/SlopeRunway"]
+polygon = PackedVector2Array(375, -165, 495, -45, 495, -28, 375, -148)
+
+[node name="RampSprite1" type="Sprite2D" parent="Platforms/SlopeRunway"]
+position = Vector2(400, -140)
+rotation = 0.785398
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(64, 32, 32, 16)
+
+[node name="RampSprite2" type="Sprite2D" parent="Platforms/SlopeRunway"]
+position = Vector2(430, -110)
+rotation = 0.785398
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(64, 32, 32, 16)
+
+[node name="RampSprite3" type="Sprite2D" parent="Platforms/SlopeRunway"]
+position = Vector2(460, -80)
+rotation = 0.785398
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(64, 32, 32, 16)
+
+[node name="RampSprite4" type="Sprite2D" parent="Platforms/SlopeRunway"]
+position = Vector2(485, -55)
+rotation = 0.785398
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(64, 32, 32, 16)
+
+[node name="PlatformLedge" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(450, -45)
+
+[node name="TrapBlock2" parent="Platforms" instance=ExtResource("13_spike_trap")]
+position = Vector2(480, -45)
+
+[node name="PlatformSummit1" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(515, -45)
+
+[node name="PlatformSummit2" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(545, -45)
+
+[node name="PlatformSummit3" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(575, -45)
+
+[node name="PlatformSummit4" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(605, -45)
+
+[node name="PlatformSummit5" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(645, -45)
+
+[node name="PlatformSummit6" parent="Platforms" instance=ExtResource("2_lnu2h")]
+position = Vector2(675, -45)
+
+[node name="TunnelCeiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(590, -65.5)
+collision_layer = 1
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/TunnelCeiling"]
+shape = SubResource("RectangleShape2D_tunnel_ceiling")
+
+[node name="CeilingSprite1" type="Sprite2D" parent="Platforms/TunnelCeiling"]
+position = Vector2(-16, 0)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(64, 32, 32, 16)
+
+[node name="CeilingSprite2" type="Sprite2D" parent="Platforms/TunnelCeiling"]
+position = Vector2(16, 0)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(64, 32, 32, 16)
+
+[node name="SecretSword" parent="." instance=ExtResource("16_sword")]
+position = Vector2(345, -182)
+
+[node name="SlimeGreen1" parent="." instance=ExtResource("6_p57ef")]
+position = Vector2(-225, 3)
+
+[node name="SlimePurple1" parent="." instance=ExtResource("9_purple_slime")]
+position = Vector2(235, -77)
+
+[node name="SlimeGreen2" parent="." instance=ExtResource("6_p57ef")]
+position = Vector2(55, -22)
+
+[node name="SlimePurple2" parent="." instance=ExtResource("9_purple_slime")]
+position = Vector2(515, -57)
+
+[node name="SlimeGreen3" parent="." instance=ExtResource("6_p57ef")]
+position = Vector2(450, -57)
+
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
+
+[node name="Portal" parent="." instance=ExtResource("8_portal")]
+position = Vector2(645, -65)
+
+[node name="LevelSign" type="Label" parent="."]
+offset_left = -350.0
+offset_top = -65.0
+offset_right = -130.0
+offset_bottom = -45.0
+text = "PHASE 4: CITADEL SANCTUM"
+label_settings = SubResource("LabelSettings_highlight")
+
+[node name="GroundSlamSign" type="Label" parent="."]
+offset_left = -350.0
+offset_top = -45.0
+offset_right = -120.0
+offset_bottom = -25.0
+text = "[S / DOWN] AIR: GROUND SLAM"
+label_settings = SubResource("LabelSettings_action")
+
+[node name="DashReminderSign" type="Label" parent="."]
+offset_left = -350.0
+offset_top = -25.0
+offset_right = -130.0
+offset_bottom = -5.0
+text = "[CTRL+D] DASH | [SHIFT] TELEPORT"
+label_settings = SubResource("LabelSettings_info")
+
+[node name="BreakableHintSign" type="Label" parent="."]
+offset_left = 5.0
+offset_top = -35.0
+offset_right = 160.0
+offset_bottom = -15.0
+text = "[!] SLAM CRACKED TILES!"
+label_settings = SubResource("LabelSettings_action")
+
+[node name="SanctumSign" type="Label" parent="."]
+offset_left = 220.0
+offset_top = -185.0
+offset_right = 440.0
+offset_bottom = -165.0
+text = "ANCIENT BLADE SANCTUM"
+label_settings = SubResource("LabelSettings_highlight")
+
+[node name="SlopeSlideSign" type="Label" parent="."]
+offset_left = 310.0
+offset_top = -150.0
+offset_right = 530.0
+offset_bottom = -130.0
+text = "[S] SLIDE DOWN RUNWAY!"
+label_settings = SubResource("LabelSettings_action")
+
+[node name="DashSlashSign" type="Label" parent="."]
+offset_left = 430.0
+offset_top = -80.0
+offset_right = 650.0
+offset_bottom = -60.0
+text = "[CTRL+D] DASH-SLASH SLIMES!"
+label_settings = SubResource("LabelSettings_action")
+
+[node name="TunnelSlideSign" type="Label" parent="."]
+offset_left = 525.0
+offset_top = -95.0
+offset_right = 720.0
+offset_bottom = -75.0
+text = "[S] SLIDE UNDER TO WARP!"
+label_settings = SubResource("LabelSettings_action")

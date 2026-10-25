@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://c38whqep818mk"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="FontFile" uid="uid://bg4d56k0g6xsw" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lives"]
+font = ExtResource("2_font")
+font_size = 12
+font_color = Color(1, 0.3, 0.45, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_coins"]
+font = ExtResource("2_font")
+font_size = 12
+font_color = Color(1, 0.9, 0.3, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_blink"]
+font = ExtResource("2_font")
+font_size = 10
+font_color = Color(0.2, 1, 1, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_level"]
+font = ExtResource("2_font")
+font_size = 11
+font_color = Color(1, 1, 1, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pause_title"]
+font = ExtResource("2_font")
+font_size = 16
+font_color = Color(1, 0.85, 0.2, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_hud")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="LivesLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "LIVES: ♥ ♥ ♥"
+label_settings = SubResource("LabelSettings_lives")
+
+[node name="CoinLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "COINS: 0"
+label_settings = SubResource("LabelSettings_coins")
+
+[node name="BlinkLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "[SHIFT/J] BLINK: READY"
+label_settings = SubResource("LabelSettings_blink")
+
+[node name="TopRightBox" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/separation = 16
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TopRightBox"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "PHASE 1"
+label_settings = SubResource("LabelSettings_level")
+horizontal_alignment = 2
+
+[node name="PauseButton" type="Button" parent="MarginContainer/TopRightBox"]
+custom_minimum_size = Vector2(84, 26)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "|| PAUSE"
+
+[node name="PauseMenu" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="Panel" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -95.0
+offset_right = 115.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PauseTitle" type="Label" parent="PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_pause_title")
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(170, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "RESUME"
+
+[node name="ReplayButton" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(170, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "REPLAY LEVEL"
+
+[node name="DashboardButton" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(170, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "DASHBOARD"

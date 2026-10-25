@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://bre6c4d5ac53e"]
+
+[ext_resource type="Script" path="res://scripts/shadow_charger.gd" id="1_charger"]
+[ext_resource type="Texture2D" uid="uid://dqgydyx76eogq" path="res://assets/sprites/slime_purple.png" id="2_purple"]
+[ext_resource type="PackedScene" uid="uid://dhq0pa6na6p7k" path="res://scenes/killzone.tscn" id="3_kill"]
+[ext_resource type="AudioStream" uid="uid://d1y32101v0478" path="res://assets/sounds/tap.wav" id="4_sound"]
+[ext_resource type="AudioStream" uid="uid://c6rhnv776e05q" path="res://assets/sounds/jump.wav" id="5_whoosh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0"]
+atlas = ExtResource("2_purple")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1"]
+atlas = ExtResource("2_purple")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2"]
+atlas = ExtResource("2_purple")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3"]
+atlas = ExtResource("2_purple")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_charger"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(18, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_damage"]
+size = Vector2(20, 16)
+
+[node name="ShadowCharger" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_charger")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.85, 0.15, 0.25, 1)
+position = Vector2(0, -14)
+scale = Vector2(1.35, 1.35)
+sprite_frames = SubResource("SpriteFrames_charger")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="killzone" parent="." instance=ExtResource("3_kill")]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+shape = SubResource("RectangleShape2D_damage")
+
+[node name="DustParticles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -2)
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+emission_shape = 3
+emission_rect_extents = Vector2(12, 2)
+direction = Vector2(0, -1)
+spread = 45.0
+gravity = Vector2(0, 120)
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+color = Color(0.7, 0.75, 0.85, 0.8)
+
+[node name="DashTrail" type="CPUParticles2D" parent="."]
+position = Vector2(0, -8)
+emitting = false
+amount = 20
+lifetime = 0.35
+emission_shape = 3
+emission_rect_extents = Vector2(8, 8)
+gravity = Vector2(0, 0)
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color = Color(1, 0.2, 0.3, 0.7)
+
+[node name="AlertSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sound")
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_whoosh")

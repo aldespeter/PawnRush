@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dmj6tg7yqw1va"]
+
+[ext_resource type="Script" path="res://scripts/teleport_ghost.gd" id="1_ghost"]
+[ext_resource type="Texture2D" uid="uid://cwf1bm76xv78p" path="res://assets/sprites/knight.png" id="2_knight"]
+
+[node name="TeleportGhost" type="Sprite2D"]
+texture = ExtResource("2_knight")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+script = ExtResource("1_ghost")

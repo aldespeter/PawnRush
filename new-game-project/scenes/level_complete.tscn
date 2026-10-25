@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://2xvtv0svui44"]
+
+[ext_resource type="Script" path="res://scripts/level_complete.gd" id="1_modal"]
+[ext_resource type="FontFile" uid="uid://bg4d56k0g6xsw" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("2_font")
+font_size = 16
+font_color = Color(0.2, 1, 0.8, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_stars"]
+font = ExtResource("2_font")
+font_size = 22
+font_color = Color(1, 0.85, 0.2, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_coins"]
+font = ExtResource("2_font")
+font_size = 10
+font_color = Color(1, 1, 1, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="LevelComplete" type="CanvasLayer"]
+process_mode = 3
+layer = 10
+script = ExtResource("1_modal")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.06, 0.1, 0.75)
+
+[node name="Panel" type="Panel" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="ColorRect/Panel/VBoxContainer"]
+layout_mode = 2
+text = "LEVEL COMPLETE!"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="StarsLabel" type="Label" parent="ColorRect/Panel/VBoxContainer"]
+layout_mode = 2
+text = "★ ★ ★"
+label_settings = SubResource("LabelSettings_stars")
+horizontal_alignment = 1
+
+[node name="CoinsLabel" type="Label" parent="ColorRect/Panel/VBoxContainer"]
+layout_mode = 2
+text = "COINS COLLECTED: 3 / 3"
+label_settings = SubResource("LabelSettings_coins")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ReplayButton" type="Button" parent="ColorRect/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 28)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "REPLAY"
+
+[node name="NextButton" type="Button" parent="ColorRect/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 28)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "NEXT"
+
+[node name="DashboardButton" type="Button" parent="ColorRect/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(120, 26)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "DASHBOARD"

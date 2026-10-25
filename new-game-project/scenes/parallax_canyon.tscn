@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://canyonsunsetbg7"]
+
+[ext_resource type="Texture2D" uid="uid://cxq1b6aglt3eo" path="res://assets/sprites/canyon_sky.png" id="1_sky"]
+[ext_resource type="Texture2D" uid="uid://b6nnt22jveh5h" path="res://assets/sprites/canyon_mountains_far.png" id="2_mtn_far"]
+[ext_resource type="Texture2D" uid="uid://tf15bc3ekull" path="res://assets/sprites/canyon_mesas_mid.png" id="3_mesas_mid"]
+[ext_resource type="Texture2D" uid="uid://dohvak0dqfkht" path="res://assets/sprites/canyon_ridge_near.png" id="4_ridge_near"]
+
+[node name="ParallaxCanyon" type="ParallaxBackground"]
+texture_filter = 0
+
+[node name="SkyLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.03, 0.01)
+motion_mirroring = Vector2(640, 0)
+
+[node name="SkySprite" type="Sprite2D" parent="SkyLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("1_sky")
+centered = false
+
+[node name="FarMountainsLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.16, 0.04)
+motion_mirroring = Vector2(640, 0)
+
+[node name="FarMtnSprite" type="Sprite2D" parent="FarMountainsLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("2_mtn_far")
+centered = false
+
+[node name="MidMesasLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.38, 0.09)
+motion_mirroring = Vector2(640, 0)
+
+[node name="MidMesasSprite" type="Sprite2D" parent="MidMesasLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("3_mesas_mid")
+centered = false
+
+[node name="NearRidgeLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.65, 0.16)
+motion_mirroring = Vector2(640, 0)
+
+[node name="NearRidgeSprite" type="Sprite2D" parent="NearRidgeLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("4_ridge_near")
+centered = false

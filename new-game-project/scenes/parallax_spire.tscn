@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dwk2ns8sdwg3k"]
+
+[ext_resource type="Texture2D" uid="uid://hocwnxpyesfb" path="res://assets/sprites/spire_sky.png" id="1_sky"]
+[ext_resource type="Texture2D" uid="uid://cq2clfv8t86cq" path="res://assets/sprites/spire_peaks_far.png" id="2_peaks_far"]
+[ext_resource type="Texture2D" uid="uid://c1nhpwvx84k2i" path="res://assets/sprites/spire_clouds_mid.png" id="3_clouds_mid"]
+[ext_resource type="Texture2D" uid="uid://16833dw7m6dm" path="res://assets/sprites/spire_pines_near.png" id="4_pines_near"]
+
+[node name="ParallaxSpire" type="ParallaxBackground"]
+texture_filter = 0
+
+[node name="SkyLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.03, 0.01)
+motion_mirroring = Vector2(640, 0)
+
+[node name="SkySprite" type="Sprite2D" parent="SkyLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("1_sky")
+centered = false
+
+[node name="FarPeaksLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.16, 0.04)
+motion_mirroring = Vector2(640, 0)
+
+[node name="FarPeaksSprite" type="Sprite2D" parent="FarPeaksLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("2_peaks_far")
+centered = false
+
+[node name="CloudSeaLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.38, 0.09)
+motion_mirroring = Vector2(640, 0)
+
+[node name="CloudSeaSprite" type="Sprite2D" parent="CloudSeaLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("3_clouds_mid")
+centered = false
+
+[node name="NearPinesLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.65, 0.16)
+motion_mirroring = Vector2(640, 0)
+
+[node name="NearPinesSprite" type="Sprite2D" parent="NearPinesLayer"]
+texture_filter = 0
+position = Vector2(-320, -260)
+texture = ExtResource("4_pines_near")
+centered = false

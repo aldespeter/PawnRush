@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://df6vkhqep17m3"]
+
+[ext_resource type="Script" path="res://scripts/portal.gd" id="1_portal"]
+[ext_resource type="Texture2D" uid="uid://ckwm7iqr41hap" path="res://assets/sprites/world_tileset.png" id="2_tileset"]
+[ext_resource type="FontFile" uid="uid://bg4d56k0g6xsw" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_font"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_portal"]
+radius = 7.0
+height = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal"]
+atlas = ExtResource("2_tileset")
+region = Rect2(48, 128, 16, 16)
+
+[sub_resource type="LabelSettings" id="LabelSettings_portal"]
+font = ExtResource("3_font")
+font_size = 8
+font_color = Color(0.3, 1, 1, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Portal" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_portal")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("CapsuleShape2D_portal")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.2, 0.9, 1, 0.95)
+position = Vector2(0, -12)
+scale = Vector2(1.2, 1.5)
+texture = SubResource("AtlasTexture_portal")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 24.0
+offset_bottom = -21.0
+text = "WARP"
+label_settings = SubResource("LabelSettings_portal")
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
